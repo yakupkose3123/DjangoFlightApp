@@ -29,7 +29,13 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     # Third party apps:
     'rest_framework',
+    'rest_framework.authtoken',
+    'dj_rest_auth',
     'drf_yasg', #! For swagger
+
+
+    #MyApps:
+    'users',
     
     
 ]
@@ -179,3 +185,11 @@ LOGGING = {
         },
     },
 }
+
+REST_FRAMEWORK = {
+    'DEFAULT_AUTHENTICATION_CLASSES': [
+        'rest_framework.authentication.TokenAuthentication',
+    ]
+}
+
+
