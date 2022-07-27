@@ -1,7 +1,7 @@
 from rest_framework import serializers, validators
 from django.contrib.auth.models import User
 from django.contrib.auth.password_validation import validate_password
-from dj_rest_auth.serializers import TokenSerializer
+# from dj_rest_auth.serializers import TokenSerializer
 
 
 class RegisterSerializer(serializers.ModelSerializer):
@@ -32,14 +32,16 @@ class RegisterSerializer(serializers.ModelSerializer):
             "password",
             "password2"
         )
-
     def create(self, validated_data):
-        password = validated_data.pop("password")
+        password = validated_data.pop("password") 
         validated_data.pop("password2")
         user = User.objects.create(**validated_data)
         user.set_password(password)
         user.save()
         return user
+
+
+# Kendi validationumuzu yaptık? pass1 eşitmi pass2
 
     def validate(self, data):
         if data["password"] != data["password2"]:
