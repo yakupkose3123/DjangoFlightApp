@@ -192,4 +192,7 @@ REST_FRAMEWORK = {
     ]
 }
 
-
+#! For Override TokenSerializers
+REST_AUTH_SERIALIZERS = {
+    'TOKEN_SERIALIZER': 'users.serializers.CustomTokenSerializer', #'appname - foldername - new Serializername'
+}
