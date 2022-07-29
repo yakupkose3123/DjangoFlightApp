@@ -29,13 +29,13 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     # Third party apps:
     'rest_framework',
-    'rest_framework.authtoken',
     'dj_rest_auth',
-    'drf_yasg', #! For swagger
-
+    'rest_framework.authtoken',
+    'drf_yasg', 
 
     #MyApps:
     'users',
+    'flight',
     
     
 ]
