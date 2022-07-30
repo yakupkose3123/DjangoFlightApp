@@ -16,21 +16,25 @@ class FlightSerializer(serializers.ModelSerializer):
             "etd"
         )
         
-        
+
 class PassengerSerializer(serializers.ModelSerializer):
     class Meta:
         model = Passenger
         fields = '__all__'
         
-        
+
+#?NESTED SERİALİZERS
+#flıght ile passenger ı birbirine bağlamak zorundayız        
 class ReservationSerializer(serializers.ModelSerializer):
     
     passenger = PassengerSerializer(many=True, required=False)
     flight = serializers.StringRelatedField()  # default read_only=True
     user = serializers.StringRelatedField()  # default read_only=True
+
+    #flight ve user create ederken StringRelatedField read only olduğu için id leri kullanmak için alttakifieldları ekledik
     flight_id = serializers.IntegerField(write_only=True)
     user_id = serializers.IntegerField(write_only=True, required=False)
-    class Meta:
+    class Meta: #Görüntü şekli bu sırada olsun
         model = Reservation
         fields =(
             "id",
@@ -40,7 +44,7 @@ class ReservationSerializer(serializers.ModelSerializer):
             "user_id",
             "passenger"
         )
-        
+    # Reservation un içinde passenger create edebilmek için  
     def create(self, validated_data):
         passenger_data = validated_data.pop('passenger')
         print(validated_data)
@@ -52,10 +56,10 @@ class ReservationSerializer(serializers.ModelSerializer):
         reservation.save()
         return reservation
     
-    
+#!Staff user uçuşlarla birlikte yolcuları da görmesi için yeni bir serializer olşturduk
 class StaffFlightSerializer(serializers.ModelSerializer):
     
-    reservations = ReservationSerializer(many=True, read_only=True)
+    reservations = ReservationSerializer(many=True, read_only=True) #Yukarıdaki releted name i burada kullandık
     
     class Meta:
         model = Flight
